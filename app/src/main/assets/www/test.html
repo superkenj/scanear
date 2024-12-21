@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Upload and Storage</title>
+    <link rel="stylesheet" href="Dashboard.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+      #gallery {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      #gallery img {
+        max-width: 100px;
+        margin: 5px;
+        position: relative;
+        cursor: pointer; /* Change cursor to indicate interactivity */
+      }
+      .audio-card {
+        margin: 20px;
+      }
+      .search-line {
+        margin: 20px;
+      }
+      .search-button {
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="profile">
+      <img src="asset/PrimaryLogo.png" alt="" />
+    </div>
+
+    <hr />
+    <!-- Content Section -->
+    <main class="content">
+      <div class="audio-card">
+        <a class="add-folder" onclick="addPicture()">
+          <input type="file" id="myFileInput" accept="image/*" />
+        </a>
+        <div id="gridContainer"></div>
+        <div id="gallery"></div>
+      </div>
+    </main>
+
+    <div class="search-line"></div>
+
+    <div class="search-button">
+      <button onclick="performSearch()">
+        <img src="asset/Search (2).png" alt="Search Icon" />
+      </button>
+    </div>
+
+    <script>
+      window.onload = function () {
+        loadImages();
+        loadAndDisplaySavedPictures();
+      };
+
+      function addPicture() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+
+        document.body.appendChild(input);
+
+        input.onchange = function () {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            savePicture(e.target.result);
+          };
+
+          reader.readAsDataURL(this.files[0]);
+        };
+
+        // Remove the input element after selection
+        setTimeout(() => {
+          input.remove();
+        }, 100);
+      }
+
+      function savePicture(pictureData) {
+        let pictures = JSON.parse(localStorage.getItem("savedPictures")) || [];
+
+        // Check if the picture already exists
+        if (!pictures.includes(pictureData)) {
+          pictures.push(pictureData);
+          localStorage.setItem("savedPictures", JSON.stringify(pictures));
+
+          alert("Picture added successfully!");
+          displaySavedPicture(pictureData);
+        } else {
+          alert("This picture is already saved.");
+        }
+      }
+
+      function loadAndDisplaySavedPictures() {
+        const pictures =
+          JSON.parse(localStorage.getItem("savedPictures")) || [];
+        pictures.forEach((picture) => displaySavedPicture(picture));
+      }
+
+      function displaySavedPicture(pictureData) {
+        const gridContainer = document.getElementById("gridContainer");
+        if (!gridContainer) return;
+
+        const img = document.createElement("img");
+        img.src = pictureData;
+        img.alt = "Saved Picture";
+        img.style.width = "150px"; // Adjust size as needed
+        img.style.margin = "10px";
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Remove";
+        deleteBtn.style.marginLeft = "10px";
+        deleteBtn.onclick = () => removePicture(pictureData);
+
+        const container = document.createElement("div");
+        container.appendChild(img);
+        container.appendChild(deleteBtn);
+
+        gridContainer.appendChild(container);
+      }
+
+      function removePicture(pictureData) {
+        let pictures = JSON.parse(localStorage.getItem("savedPictures"));
+
+        if (pictures) {
+          const index = pictures.indexOf(pictureData);
+
+          if (index !== -1) {
+            pictures.splice(index, 1);
+
+            // Update localStorage
+            localStorage.setItem("savedPictures", JSON.stringify(pictures));
+
+            // Remove the image element from the DOM
+            const imgElement = document.querySelector(
+              `img[src="${pictureData}"]`
+            );
+            if (imgElement) {
+              imgElement.parentNode.remove();
+            }
+
+            alert("Picture removed successfully.");
+          }
+        }
+      }
+
+      // Function to load images from local storage and display them
+      function loadImages() {
+        const recentImageDataUrls =
+          JSON.parse(localStorage.getItem("recent-images")) || [];
+        const gallery = document.getElementById("gallery");
+        gallery.innerHTML = ""; // Clear the gallery
+
+        recentImageDataUrls.forEach((url, index) => {
+          const imgContainer = document.createElement("div");
+          imgContainer.style.position = "relative"; // For positioning
+
+          const img = document.createElement("img");
+          img.src = url;
+
+          // Set up event listeners for hold to delete on the image
+          img.addEventListener("mousedown", () => {
+            currentImageIndex = index; // Store the index of the image being held
+            deleteTimeout = setTimeout(() => {
+              // Show confirmation dialog after 1 second
+              if (confirm("Are you sure you want to delete this image?")) {
+                deleteImage(currentImageIndex);
+              }
+            }, 1000); // Hold for 1 second to prompt for deletion
+          });
+
+          img.addEventListener("mouseup", () => {
+            clearTimeout(deleteTimeout); // Clear the timeout if the button is released
+          });
+
+          img.addEventListener("mouseleave", () => {
+            clearTimeout(deleteTimeout); // Clear the timeout if the mouse leaves the image
+          });
+
+          imgContainer.appendChild(img);
+          gallery.appendChild(imgContainer);
+        });
+      }
+
+      // Function to delete an image
+      function deleteImage(index) {
+        const images = JSON.parse(localStorage.getItem("recent-images")) || [];
+        images.splice(index, 1); // Remove the image at the specified index
+        localStorage.setItem("recent-images", JSON.stringify(images)); // Update local storage
+        loadImages(); // Reload images to reflect changes
+      }
+
+      // Function to handle file input change for the gallery
+      function handleFileInputChange(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+
+          reader.addEventListener("load", () => {
+            // Get existing images from local storage
+            const images =
+              JSON.parse(localStorage.getItem("recent-images")) || [];
+            // If an image is being replaced, remove it from the array
+            if (currentImageIndex !== undefined) {
+              images[currentImageIndex] = reader.result; // Replace the image
+              currentImageIndex = undefined; // Reset the index
+            } else {
+              // Push the base64 string to the array
+              images.push(reader.result);
+            }
+            // Set the item in localStorage
+            localStorage.setItem("recent-images", JSON.stringify(images));
+            // Load images to display
+            loadImages();
+          });
+
+          reader.readAsDataURL(file);
+        }
+      }
+
+      // Event listener for file input
+      document
+        .querySelector("#myFileInput")
+        .addEventListener("change", handleFileInputChange);
+
+      // Function to perform search (if applicable)
+      function performSearch() {
+        let searchTerm = prompt("Enter your search term:");
+
+        if (searchTerm && searchTerm.trim() !== "") {
+          // Implement search logic here if needed
+          alert("Search functionality not implemented yet.");
+        } else {
+          alert("Please enter a search term.");
+        }
+      }
+    </script>
+  </body>
+</html>

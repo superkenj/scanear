@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>History Language</title>
+    <link rel="stylesheet" href="historylang.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="close-btn">
+        <a href="Dashboard.html" style="text-decoration: none; color: #000">x</a>
+      </div>
+      <h1>Language</h1>
+      <div id="myDIV">
+        <button class="language-btn english active">English</button>
+        <button id="myBtn" class="language-btn filipino">Filipino</button>
+        <button class="language-btn"></button>
+        <button class="language-btn"></button>
+      </div>
+      <div class="logo">
+        <img src="asset/Group 57.png" alt="Logo" />
+      </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <div>Change language?</div>
+        <hr />
+        <div>
+          <button class="close">Cancel</button>
+          <button class="ok">Ok</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add active class to the current button (highlight it)
+      var header = document.getElementById("myDIV");
+      var btns = header.getElementsByClassName("language-btn");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+          var current = document.getElementsByClassName("active");
+          if (current.length > 0) {
+            current[0].classList.remove("active");
+          }
+          this.classList.add("active");
+        });
+      }
+
+      // Get the modal
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
+
+      // Get the <span> element that closes the modal
+      var span = document.querySelector(".modal-content .close");
+      var ok = document.querySelector(".modal-content .ok");
+
+      // When the user clicks the button, open the modal
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      ok.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+.profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+hr {
+  border: 2px solid;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.audio {
+  margin-left: 35px;
+}
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 50%; /* Full width for small screens */
+    height: 700px; /* Adjust height dynamically */
+    padding: 20px; /* Reduce padding */
+  }
+}

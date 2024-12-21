@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Login</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <div class="container">
+      <img src="asset/PrimaryLogo.png" alt="" srcset="" />
+      <form action="" id="login-form">
+        <div class="form">
+          <div class="user">Username</div>
+          <input type="text" id="username" />
+          <div class="pass">Password</div>
+          <input type="password" id="password" />
+        </div>
+        <button
+          type="submit"
+          style="
+            display: flex;
+            margin-left: 65px;
+            margin-bottom: 10px;
+            padding: 10px 15px 10px 15px;
+            background-color: #fb9a40;
+            border: none;
+            color: white;
+            border-radius: 8px;
+          "
+        >
+          Login
+        </button>
+      </form>
+      <a
+        href="signup.html"
+        style="
+          display: flex;
+          justify-content: center;
+          background-color: #fb9a40;
+          text-decoration: none;
+          padding: 10px 15px 10px 15px;
+          border-radius: 8px;
+          color: white;
+        "
+        >Sign up</a
+      >
+    </div>
+    <script>
+      document.getElementById("login-form").addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          var username = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
+
+          // Check if username exists in localStorage
+          if (!localStorage.getItem(username)) {
+            alert("User not found");
+            return; // Prevent further execution
+          }
+
+          var user = localStorage.getItem(username);
+          var parsedUser = JSON.parse(user);
+
+          if (parsedUser.password === password) {
+            localStorage.setItem("user", JSON.stringify(parsedUser));
+            alert("Successful login");
+            window.location.href = "Dashboard.html";
+          } else {
+            alert("Incorrect password");
+          }
+        });
+    </script>
+  </body>
+</html>

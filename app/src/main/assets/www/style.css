@@ -1,0 +1,99 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("asset/Group 1.png");
+  background-repeat: no-repeat;
+  background-size: cover; /* Ensures the background scales nicely */
+  background-position: center;
+  border-radius: 10px;
+}
+
+.container img {
+  width: 300px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.form {
+  width: 100%;
+  margin-top: 50px;
+  font-size: 20px;
+}
+
+.form .user,
+.form .pass {
+  margin-bottom: 5px;
+  margin-right: center;
+  font-size: 20px;
+  font-weight: normal;
+  color: #333;
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  max-width: 350px;
+  margin-bottom: 20px;
+  height: 36px;
+  border-radius: 5px;
+  border: 1px solid rgb(251, 154, 64);
+  padding: 5px;
+  font-size: 14px;
+}
+
+.login-btn,
+.signup-btn {
+  border-radius: 5px;
+  font-size: 15px;
+  color: white;
+  width: 100%;
+  max-width: 100px;
+  height: 32px;
+  background-color: orange;
+  border: 1px solid rgb(251, 154, 64);
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+
+.login-btn:hover,
+.signup-btn:hover {
+  background-color: #e68a00;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .form {
+    margin-top: 20px;
+  }
+
+  input {
+    font-size: 15px;
+  }
+
+  .login-btn,
+  .signup-btn {
+    font-size: 14px;
+    height: 36px;
+  }
+}

@@ -1,0 +1,155 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+.container {
+    width: 90%; /* Adjust width for mobile */
+    max-width: 320px; /* Limit max width */
+    height: auto; /* Allow container height to adjust */
+    background-image: url('asset/Group 1.png'); /* Set Group 1 as the background of the container */
+    background-size: contain; /* Ensure the image fits within the container without stretching */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Ensure the background doesn't repeat */
+    border-radius: 20px;
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff914d;
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player {
+    margin-top: 50px; /* Adjusted for better positioning on mobile */
+    margin-bottom: 100px;
+    text-align: center;
+}
+
+.icon {
+    width: 100%; /* Make icon responsive */
+    max-width: 250px; /* Set a max width */
+    height: auto; /* Allow height to adjust */
+    margin: 0 auto;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play-icon {
+    width: 100%; /* Ensure icon scales with parent */
+    max-width: 150px;
+    height: auto; /* Adjust height */
+    margin-bottom: 20px;
+}
+
+.time {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+.controls {
+    margin-top: 30px; /* Adjust for mobile view */
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap; /* Ensure controls stack on small screens */
+}
+
+.control-button {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.control-button img {
+    width: 25px;
+    height: 25px;
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+}
+
+.logo {
+    width: 100%; /* Adjust logo for mobile */
+    max-width: 300px; /* Set a max width */
+    height: auto;
+    margin-top: 20px;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px; /* Reduce padding */
+        width: 90%; /* Ensure the container takes 90% of the screen width */
+    }
+
+    .back-button {
+        font-size: 14px; /* Adjust button size for mobile */
+        width: 30px;
+        height: 30px;
+    }
+
+    .player {
+        margin-top: 40px; /* Reduce space */
+    }
+
+    .icon {
+        width: 90%; /* Make icon width 90% for mobile */
+        max-width: 200px;
+    }
+
+    .play-icon {
+        width: 100%; /* Scale icon size */
+        max-width: 130px;
+    }
+
+    .time {
+        font-size: 12px; /* Smaller text for mobile */
+    }
+
+    .controls {
+        margin-top: 20px; /* Adjust controls margin */
+    }
+
+    .control-button {
+        width: 35px; /* Smaller control buttons */
+        height: 35px;
+    }
+
+    .logo {
+        max-width: 250px; /* Adjust logo size for mobile */
+    }
+}

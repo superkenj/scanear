@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <div class="Prof">
+      <a href="Dashboard.html" class="back-button">&lt;</a>
+      <img src="asset/Profile.png" alt="" />
+      <label id="user-username"></label>
+
+      <button class="edit-btn" id="myBtn">Edit</button>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="mmodal">
+            <div style="margin-bottom: 10px">Edit Profile</div>
+            <div class="">
+              <div class="font-text">New Email:</div>
+              <input
+                type="text"
+                name="email"
+                id="newEmail"
+                value=""
+              />
+            </div>
+            <div>
+              <div class="font-text">New Username:</div>
+              <input
+                type="text"
+                name="username"
+                id="newUsername"
+                value=""
+              />
+            </div>
+            <div>
+              <div class="font-text">New Contact #:</div>
+              <input
+                type="text"
+                name="contact"
+                id="newContact"
+                value=""
+              />
+            </div>
+            <div>
+              <div class="font-text">New Password:</div>
+              <input type="password" name="password" id="newPassword" />
+            </div>
+            <div>
+              <div class="font-text">Current Password:</div>
+              <input
+                type="password"
+                name="currentPassword"
+                id="currentPassword"
+              />
+            </div>
+            <button class="Submit">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr style="border: 2px solid; width: 100%" />
+    <div class="Name">
+      <div class="user">
+        <div id="user-email" class="Email"></div>
+        <div id="user-uusername" class="Username"></div>
+        <div id="user-contact" class="Contact"></div>
+      </div>
+    </div>
+
+    <script>
+      // Assuming you want to display the username when the page loads
+
+      const user = JSON.parse(localStorage.getItem("user")) || {};
+      const name = user.username || "Unknown User";
+      const email = user.email || "Unknown User";
+      const contact = user.contact || "Unknown User";
+      const nname = user.username || "Unknown User";
+
+      console.log(name);
+      document.getElementById("user-username").innerText = name;
+      document.getElementById("user-uusername").innerText = nname;
+      document.getElementById("user-email").innerText = email;
+      document.getElementById("user-contact").innerText = contact;
+      // window.addEventListener("load", function () {
+      //   const storedUsername = JSON.parse(localStorage.getItem("user"));
+      //   console.log(storedUsername);
+      //   console.log(localStorage.keys());
+      //   document.getElementById("usernameDisplay").textContent = storedUsername;
+      // });
+
+      // Get the modal
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
+
+      // Get the span element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks the button, open the modal
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      // Function to save changes
+      function saveChanges() {
+        var newEmail = document.getElementById("newEmail").value;
+        var newUsername = document.getElementById("newUsername").value;
+        var newContact = document.getElementById("newContact").value;
+        var newPassword = document.getElementById("newPassword").value;
+        var currentPassword = document.getElementById("currentPassword").value;
+
+        // Here you would typically send these values to a server or update local storage
+        console.log("Saving changes:", {
+          email: newEmail,
+          username: newUsername,
+          contact: newContact,
+          password: newPassword,
+        });
+
+        // Close the modal
+        modal.style.display = "none";
+
+        // Update displayed information
+        document.querySelector(".Email").textContent = newEmail;
+        document.querySelector(".Username").textContent = newUsername;
+        document.querySelector(".Contact").textContent = newContact;
+      }
+
+      // Add event listener to the submit button
+      document.querySelector(".Submit").addEventListener("click", saveChanges);
+    </script>
+  </body>
+</html>

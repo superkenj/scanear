@@ -1,0 +1,78 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 100%;
+}
+
+.add-folder {
+  margin: 10px;
+  background-color: #fb9a40;
+  padding: 40px;
+  color: white;
+  font-size: 20px;
+}
+
+.audio-card {
+  margin: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 10px;
+}
+
+#gridContainer {
+  display: flex;
+  width: 100%;
+}
+
+.grid-item {
+  background-color: #fb9a40;
+  margin: 10px;
+  padding: 40px;
+  flex-wrap: wrap;
+}
+#gridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 10px; /* Space between grid items */
+  margin: 20px; /* Margin around the grid */
+}
+
+#gridContainer div {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+}
+
+#gridContainer img {
+  width: 100%; /* Make images responsive */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 150px; /* Set a max width for images */
+}
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+#gallery img {
+  max-width: 100px;
+  margin: 5px;
+  position: relative;
+  cursor: pointer; /* Change cursor to indicate interactivity */
+}
+.audio-card {
+  margin: 20px;
+}
+.search-line {
+  margin: 20px;
+}
+.search-button {
+  margin: 20px;
+}

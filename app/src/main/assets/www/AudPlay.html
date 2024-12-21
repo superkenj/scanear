@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scan-Ear</title>
+  <link rel="stylesheet" href="AudPlay.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
+  <script>
+    // Function to handle OCR and TTS
+    async function recognizeAndSpeak() {
+      // Get the current image from localStorage
+      const currentImageIndex = localStorage.getItem('currentImageIndex');
+      let images = JSON.parse(localStorage.getItem("recent-images")) || [];
+      const imageUrl = images[currentImageIndex];
+
+      if (!imageUrl) {
+        alert("No image found. Please upload an image first.");
+        return;
+      }
+
+      // Perform OCR using Tesseract.js
+      alert("Processing the image for text recognition...");
+      try {
+        const { data: { text } } = await Tesseract.recognize(imageUrl, 'eng');
+        alert("Recognized Text: " + text);
+
+        // Convert the recognized text to speech
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = 'en-US';
+        window.speechSynthesis.speak(speech);
+      } catch (error) {
+        alert("Error recognizing text: " + error.message);
+        console.error(error);
+      }
+    }
+
+    // Function to handle the delete action
+    function deleteFile() {
+      const confirmation = confirm("Are you sure you want to delete this file?");
+      if (confirmation) {
+        const currentImageIndex = localStorage.getItem('currentImageIndex');
+        let images = JSON.parse(localStorage.getItem("recent-images")) || [];
+        if (currentImageIndex !== null && currentImageIndex >= 0) {
+          images.splice(currentImageIndex, 1); // Remove the image at the specified index
+          localStorage.setItem("recent-images", JSON.stringify(images));
+        }
+
+        alert("File deleted!");
+        window.location.href = "dashboard.html";
+      } else {
+        alert("File not deleted.");
+      }
+    }
+  </script>
+</head>
+<body>
+<div class="container">
+  <a href="Dashboard.html">
+    <button class="back-button">&lt;</button>
+  </a>
+  <div class="player">
+    <div class="icon">
+      <img src="asset/play.png" alt="Play Button" class="play-icon" onclick="recognizeAndSpeak()" />
+    </div>
+
+    <div class="controls">
+      <button class="control-button">
+        <img src="asset/Rewind.png" alt="Rewind" />
+      </button>
+      <button class="control-button">
+        <img src="asset/Pause.png" alt="Pause" />
+      </button>
+      <button class="control-button">
+        <img src="asset/FastForward.png" alt="Fast Forward" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Add Delete Button -->
+  <div class="delete-section">
+    <button class="delete-button" onclick="deleteFile()">DELETE</button>
+  </div>
+
+  <footer>
+    <img src="asset/PrimaryLogo.png" alt="Scan-Ear Logo" class="logo" />
+  </footer>
+</div>
+</body>
+</html>
